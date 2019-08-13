@@ -1,3 +1,4 @@
 # woldDiscortBot
 Discord Bot Utils for Wolf Team channel administration
-# wolfDiscordBot
+
+Hasta nuevo aviso trabajamos la rama principal es **develop**
