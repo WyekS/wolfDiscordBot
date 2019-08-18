@@ -1,5 +1,5 @@
 group 'es.wolfteam'
-version '1.0510-RELEASE'
+version '1.20190818-RELEASE'
 
 apply plugin: 'java'
 apply plugin: 'java-library-distribution'

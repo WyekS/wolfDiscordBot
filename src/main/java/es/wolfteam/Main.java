@@ -40,7 +40,6 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import static es.wolfteam.Constants.Files.HELP_MESSAGE_FILE;
-import static es.wolfteam.Constants.Ids.CHANNEL_BOT_SERVER;
 import static es.wolfteam.Constants.Ids.CHANNEL_CALL_EVENTS;
 import static es.wolfteam.Constants.REGEX;
 import static es.wolfteam.Constants.Request.*;
@@ -73,7 +72,7 @@ public class Main extends ListenerAdapter
 
     public void onMessageReceived(final MessageReceivedEvent event)
     {
-        if (!event.getTextChannel().getId().equals(CHANNEL_BOT_SERVER))
+        if (!event.getTextChannel().getId().equals("559009394273288233"))
         {
             return;
         }
@@ -105,7 +104,6 @@ public class Main extends ListenerAdapter
                 case Constants.Commands.HELP:
                     LOG.info("HELP Executed");
                     message = buildHelpingsMessage();
-                    LOG.info("HELP finished");
                     result = true;
                     break;
 
@@ -114,10 +112,24 @@ public class Main extends ListenerAdapter
 
                     alias = getSecondArgumentFromRequest(matcher);
                     user = getUserFromAlias(alias);
-
-                    result = executeCommand(Constants.Alias.ROOT.concat(Constants.Alias.START), user);
+                    result = executeCommand(Constants.Paths.ROOT.concat(Constants.Paths.STOP), user);
                     if (result)
-                        message = alias + " iniciándose...\n" + "Ha sido iniciado por " + event.getAuthor().getName();
+                    {
+                        result = executeCommand(Constants.Paths.ROOT.concat(Constants.Paths.START), user, alias);
+                        if (result)
+                        {
+                            message = alias + " iniciándose...\n" + "Ha sido iniciado por " + event.getAuthor().getName();
+                        }
+                        else
+                        {
+                            message = " Error al iniciar " + alias;
+                        }
+                    }
+                    else
+                    {
+                        message ="Error al parar el anterior servidor. No es posible continuar con el inicio de " + alias;
+                    }
+
                     break;
 
                 case Constants.Commands.STOP:
@@ -126,7 +138,7 @@ public class Main extends ListenerAdapter
                     alias = getSecondArgumentFromRequest(matcher);
                     user = getUserFromAlias(alias);
 
-                    result = executeCommand(Constants.Alias.ROOT.concat(Constants.Alias.STOP), user);
+                    result = executeCommand(Constants.Paths.ROOT.concat(Constants.Paths.STOP), user);
 
                     if (result)
                         message = alias + " parándose...\n" + "Ha sido parado por " + event.getAuthor().getName();
@@ -139,14 +151,14 @@ public class Main extends ListenerAdapter
                     user = getUserFromAlias(alias);
 
                     result = StringUtils.isNotBlank(user)
-                            && executeCommand(Constants.Alias.ROOT.concat(Constants.Alias.STOP), user)
-                            && executeCommand(Constants.Alias.ROOT.concat(Constants.Alias.START), user);
+                            && executeCommand(Constants.Paths.ROOT.concat(Constants.Paths.STOP), user)
+                            && executeCommand(Constants.Paths.ROOT.concat(Constants.Paths.START), user, alias);
 
                     if (result)
                         message = alias + " reiniciándose...\n" + "Ha sido reiniciado por " + event.getAuthor().getName();
                     break;
 
-                case Constants.Commands.NUCLEAR:
+               /* case Constants.Commands.NUCLEAR:
                     LOG.info("RESTART ALL Executed");
                     result = allServerExecution(Constants.Alias.ROOT.concat(Constants.Alias.STOP))
                             && allServerExecution(Constants.Alias.ROOT.concat(Constants.Alias.START));
@@ -154,7 +166,7 @@ public class Main extends ListenerAdapter
                     if (result)
                         message = "El usuario " + event.getAuthor().getName() + " ha lanzado una bomba nuclear en Altis " +
                                 ":bomb:+ \nSe ha producido un parado e inicio de todos los servidores de Wolf Team";
-                    break;
+                    break;*/
 
                 case Constants.Commands.STATUS:
                     LOG.info("Status");
@@ -446,7 +458,7 @@ public class Main extends ListenerAdapter
         Process process;
         try
         {
-            LOG.info("Command to execute: " + Arrays.toString(arguments) + "; Argument: ");
+            LOG.info("Command to execute and arguments: " + Arrays.toString(arguments));
             process = new ProcessBuilder(arguments).start();
         }
         catch (final Exception ex) // catch generic Exception because we want to show error for any unusual situation

@@ -2,10 +2,10 @@ package es.wolfteam;
 
 public interface Constants
 {
-    String REGEX = "(/wolf)\\s(help|start|stop|restart|nuclear|status|update|slot)(\\s(all|servers|mods|alpha|delta|foxtrot|tango|nono|[0-9]))?" +
+    String REGEX = "(/wolf)\\s(help|start|stop|restart|nuclear|status|update|slot)(\\s(all|servers|mods|delta|tango|nono|[0-9]))?" +
             "(\\s(ametrallador|ataa|dmr|falcon|francotirador|granadero|ingeniero|medico|martillo|radio|triton|valquiria))?";
 
-    interface Alias
+    interface Paths
     {
         String START = "start_server.sh";
         String STOP = "stop_server.sh";
