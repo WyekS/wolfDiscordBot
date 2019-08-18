@@ -40,6 +40,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import static es.wolfteam.Constants.Files.HELP_MESSAGE_FILE;
+import static es.wolfteam.Constants.Ids.CHANNEL_BOT_SERVER;
 import static es.wolfteam.Constants.Ids.CHANNEL_CALL_EVENTS;
 import static es.wolfteam.Constants.REGEX;
 import static es.wolfteam.Constants.Request.*;
@@ -72,7 +73,7 @@ public class Main extends ListenerAdapter
 
     public void onMessageReceived(final MessageReceivedEvent event)
     {
-        if (!event.getTextChannel().getId().equals("559009394273288233"))
+        if (!event.getTextChannel().getId().equals(CHANNEL_BOT_SERVER))
         {
             return;
         }
