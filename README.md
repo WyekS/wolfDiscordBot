@@ -16,6 +16,7 @@ __TODO__:
 - El Bot está pensado para actuar en cualquier canal del Discord del Clan, hay que ingeniar una capa que gestione los ID's 
 de los canales/usuarios. Es decir, podrá ser usado por cualquier usuario pero habrá niveles de permisos que permitan realizar 
 funciones u otras.
+- Cargar PBO's desde Discord
 - etc
 
 > NOTA: Todas estas tareas no son definitivas, quedan abierta a opiniones :D
