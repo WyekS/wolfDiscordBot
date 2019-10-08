@@ -1,6 +1,6 @@
-package es.wolfteam;
+package es.wolfteam.data.types;
 
-public enum UserEnum
+public enum UserType
 {
     // alpha("arma302", "2302"), unused
     nono("arma3hc", "2320"),
@@ -11,7 +11,7 @@ public enum UserEnum
     private String name;
     private String port;
 
-    UserEnum(final String name, final String port) {
+    UserType(final String name, final String port) {
         this.name = name;
         this.port = port;
     }

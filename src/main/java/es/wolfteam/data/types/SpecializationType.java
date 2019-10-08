@@ -1,6 +1,6 @@
-package es.wolfteam;
+package es.wolfteam.data.types;
 
-public enum SpecializationEnum
+public enum SpecializationType
 {
     ametrallador("Ametrallador",
             "https://cdn.discordapp.com/attachments/544493063372931080/556418623996952586/Ametrallador.jpg"),
@@ -41,7 +41,7 @@ public enum SpecializationEnum
     private String name;
     private String image;
 
-    SpecializationEnum(final String name, final String image)
+    SpecializationType(final String name, final String image)
     {
         this.name = name;
         this.image = image;

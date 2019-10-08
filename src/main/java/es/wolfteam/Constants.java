@@ -2,6 +2,7 @@ package es.wolfteam;
 
 public interface Constants
 {
+    String BASE = "/wolf";
     String REGEX = "(/wolf)\\s(help|start|stop|restart|nuclear|status|update|slot)(\\s(all|servers|mods|delta|tango|nono|[0-9]))?" +
             "(\\s(ametrallador|ataa|dmr|falcon|francotirador|granadero|ingeniero|medico|martillo|radio|triton|valquiria))?";
 
