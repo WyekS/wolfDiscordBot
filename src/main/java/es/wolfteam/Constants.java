@@ -6,32 +6,18 @@ public interface Constants
     String REGEX = "(/wolf)\\s(help|start|stop|restart|nuclear|status|update|slot)(\\s(all|servers|mods|delta|tango|nono|[0-9]))?" +
             "(\\s(ametrallador|ataa|dmr|falcon|francotirador|granadero|ingeniero|medico|martillo|radio|triton|valquiria))?";
 
-    interface Paths
-    {
-        String START = "start_server.sh";
-        String STOP = "stop_server.sh";
-        String ROOT = "/opt/wolf_server/";
-    }
-
-    interface Commands
-    {
-        String HELP = "help";
-        String START = "start";
-        String STOP = "stop";
-        String RESTART = "restart";
-        String UPDATE = "update";
-        String NUCLEAR = "nuclear";
-        String STATUS = "status";
-        String SLOT = "slot";
-    }
-
     interface Files
     {
-        String HELP_MESSAGE_FILE = "help_message.md";
+        String HELP_MESSAGE_FILE = "messages/help_message.md";
     }
 
     interface Ids
     {
+        interface MockedIds
+        {
+            long CHANNEL_CALL_EVENTS_MOCKED = 571065967942041699L;
+        }
+
         long CHANNEL_CALL_EVENTS = 563696160817283102L;
         String CHANNEL_BOT_SERVER = "562266299657486338";
     }

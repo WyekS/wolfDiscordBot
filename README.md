@@ -8,14 +8,15 @@ El objetivo principal es refactorizar el código para obtener una aplicación Bo
 logrando con ello desarrollar nuevas características más fácilmente.
 
 __TODO__:
-- La función _update_ usa el hilo completo, lo cual hace que el bot no pueda contestar en ese tiempo (suele tomar 10 minutos)
-- Crear un servicio para leer properties y extraer lo que no encaje de la clase Constants.java a este nuevo fichero
-- Log4j Está añadido pero no funciona, falta la configuración
-- Main.java debería quedar prácticamente vacío. Habrá que crear capas de servicio para gestionar todas las funciones
-- Una vez tengamos estas capas podremos empezar el desarrollo del bot para la gestión de muchísimas más funciones del clan
-- El Bot está pensado para actuar en cualquier canal del Discord del Clan, hay que ingeniar una capa que gestione los ID's 
+- **[FIXED]** La función _update_ usa el hilo completo, lo cual hace que el bot no pueda contestar en ese tiempo (suele tomar 10 minutos)
+- **[DONE]** Crear un servicio para leer properties y extraer lo que no encaje de la clase Constants.java a este nuevo fichero
+- **[REMOVE] Usamos el de JDA** Log4j Está añadido pero no funciona, falta la configuración
+- **[FIXED]** Main.java debería quedar prácticamente vacío. Habrá que crear capas de servicio para gestionar todas las funciones
+- **[READY]** Una vez tengamos estas capas podremos empezar el desarrollo del bot para la gestión de muchísimas más funciones del clan
+- **[IN_PROGRESS]** El Bot está pensado para actuar en cualquier canal del Discord del Clan, hay que ingeniar una capa que gestione los ID's 
 de los canales/usuarios. Es decir, podrá ser usado por cualquier usuario pero habrá niveles de permisos que permitan realizar 
 funciones u otras.
+- **[DONE]** Gestión de permisos para las acciones/usuarios
 - Cargar PBO's desde Discord
 - etc
 

@@ -5,20 +5,23 @@ import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.async.Callback;
 import com.mashape.unirest.http.exceptions.UnirestException;
-import es.wolfteam.MainOld;
+import es.wolfteam.Bot;
+import es.wolfteam.core.WConfig;
 import es.wolfteam.data.types.SpecializationType;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.entities.MessageChannel;
-import net.dv8tion.jda.core.entities.MessageEmbed;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.MessageChannel;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.Validate;
 import org.apache.http.HttpHeaders;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.awt.*;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.text.DecimalFormat;
 import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,7 +29,6 @@ import java.util.Objects;
 
 import static es.wolfteam.Constants.Files.HELP_MESSAGE_FILE;
 import static es.wolfteam.Constants.Request.FRONT_END_HTTPS;
-import static es.wolfteam.Constants.Urls.FORM_EVENT;
 
 public class WBuilderUtils
 {
@@ -40,8 +42,8 @@ public class WBuilderUtils
      * @param messageChannel {@link MessageChannel}
      * @param name           {@link String}
      */
-    private static void requestAsyncArmaUnitStatus(int attempts, final String url,
-                                            final MessageChannel messageChannel, final String name)
+    public static void requestAsyncArmaUnitStatus(int attempts, final String url,
+                                                  final MessageChannel messageChannel, final String name)
     {
         final int finalAttempts = attempts + 1;
         Unirest.get(url)
@@ -57,10 +59,17 @@ public class WBuilderUtils
                     {
                         final JSONObject jsonObject = response.getBody().getObject();
                         // LOG.info("Def +" + response.getBody().toString());
-                        messageChannel.sendMessage(buildStatusServerMessage(name,
-                                String.valueOf(jsonObject.getBoolean("status")),
-                                jsonObject.getString("name"),
-                                String.valueOf(jsonObject.getInt("players")))).queue();
+                        try
+                        {
+                            messageChannel.sendMessage(buildStatusServerMessage(name,
+                                    String.valueOf(jsonObject.getBoolean("status")),
+                                    jsonObject.getString("name"),
+                                    String.valueOf(jsonObject.getInt("players")))).queue();
+                        }
+                        catch (JSONException e)
+                        {
+                            e.printStackTrace(); // todo change to log
+                        }
                     }
 
                     @Override
@@ -90,7 +99,7 @@ public class WBuilderUtils
      * @param placesStr      Number places for this event {@link String}
      * @return {@link MessageEmbed} a builded card for chat bot
      */
-    private static MessageEmbed buildCardPlacesMessage(final String specialization, final String placesStr)
+    public static MessageEmbed buildCardPlacesMessage(final String specialization, final String placesStr)
     {
         Validate.notNull(specialization, "Parameter specialization cannot be null");
         Validate.notNull(placesStr, "Parameter places cannot be null");
@@ -101,14 +110,14 @@ public class WBuilderUtils
         description.append("<@&536857111368433675> Se necesita personal para la especialización de ")
                 .append(SpecializationType.valueOf(specialization).getName())
                 .append(". \n\nLos interesados deberán rellenar este formulario: \n")
-                .append(FORM_EVENT)
+                .append(WConfig.getParameter("url.form_event"))
                 .append("\n\nEl instructor se pondrá en contacto con los seleccionados. *(Rango mínimo de Soldado)*");
 
         HashMap<String, String> fieldsValues = new HashMap<>();
         fieldsValues.put("Plazas disponibles", String.valueOf(places));
 
         return createMessage(title,
-                description.toString(), Color.red, fieldsValues, SpecializationType.valueOf(specialization).getImage());
+                description.toString(), Color.red, fieldsValues, SpecializationType.valueOf(specialization).getImage(), true);
     }
 
     /**
@@ -121,8 +130,8 @@ public class WBuilderUtils
      * @param players {@link String}
      * @return {@link MessageEmbed} a message status of all servers
      */
-    private static MessageEmbed buildStatusServerMessage(final String server, final String status,
-                                                  final String name, final String players)
+    public static MessageEmbed buildStatusServerMessage(final String server, final String status,
+                                                        final String name, final String players)
     {
         final boolean active = status.startsWith("true");
         final HashMap<String, String> fieldsValues = new HashMap<>();
@@ -141,10 +150,10 @@ public class WBuilderUtils
      *
      * @return {@link String} a help message to discord
      */
-    private static String buildHelpingsMessage()
+    public static String buildHelpingsMessage()
     {
         String result = "";
-        ClassLoader classLoader = MainOld.class.getClassLoader();
+        ClassLoader classLoader = Bot.class.getClassLoader();
         try
         {
             result = IOUtils.toString(
@@ -158,6 +167,48 @@ public class WBuilderUtils
         return result;
     }
 
+    public static String buildInk()
+    {
+        String result = "";
+        ClassLoader classLoader = Bot.class.getClassLoader();
+        try
+        {
+            result = IOUtils.toString(
+                    Objects.requireNonNull(classLoader.getResourceAsStream("messages/ink")), StandardCharsets.UTF_8);
+        }
+        catch (final IOException ioe)
+        {
+            // LOG.error("Error I/O when the file help_message.md was being read");
+        }
+
+        return result;
+    }
+
+    public static MessageEmbed buildErrorPermissionMessage()
+    {
+        return createMessage("Error", "No tienes permisos para ejecutar este comando", null, null, null, false);
+    }
+
+    public static MessageEmbed buildErrorCommandNotFoundMessage()
+    {
+        return createMessage("Error", "Ese comando no existe", null, null, null, false);
+    }
+
+    public static MessageEmbed buildUpdateInProcessMessage()
+    {
+        return createMessage("Update Arma 3", "La actualización está en proceso... [Bot playing]", Color.orange, null, null, false);
+    }
+
+    public static MessageEmbed buildUpdateNoLogMessage()
+    {
+        return createMessage("Error", "No ningún LOG sobre la actualización", null, null, null, false);
+    }
+
+    public static MessageEmbed buildUpdateFinishMessage()
+    {
+        return createMessage("Update Arma 3", "La actualización ha finalizado", Color.green, null, null, false);
+    }
+
     /**
      * Create a Message object from API Discord
      * <p/>
@@ -169,11 +220,11 @@ public class WBuilderUtils
      * @param image       {@link String}
      * @return {@link MessageEmbed}
      */
-    private static MessageEmbed createMessage(final String title, final String description, final Color color,
-                                       final HashMap<String, String> fieldsValue, final String image)
+    public static MessageEmbed createMessage(final String title, final String description, final Color color,
+                                             final HashMap<String, String> fieldsValue, final String image, final boolean enableFooter)
     {
         // Create the EmbedBuilder instance
-        EmbedBuilder eb = new EmbedBuilder();
+        final EmbedBuilder eb = new EmbedBuilder();
 
         eb.setTitle(title, null);
 
@@ -198,21 +249,22 @@ public class WBuilderUtils
                 eb.addField(entry.getKey(), entry.getValue(), true);
             }
         }
-        eb.addBlankField(true); // Does the card more width
+
         // eb.addBlankField(false); // Separation before image
-
-
-         eb.setAuthor("", null, null);
-
-        // eb.setFooter("__por Wolf Team__", null);
-        eb.setTimestamp(Instant.now());
+        if (enableFooter)
+        {
+            eb.addBlankField(true); // Does the card more width
+            eb.setAuthor("", null, null);
+            eb.setFooter("__por Wolf Team__", "https://media.discordapp.net/attachments/564454752705052683/571084650202791938/wolf_logo_sm.png");
+            eb.setTimestamp(Instant.now());
+        }
 
         if (null != image)
         {
             eb.setImage(image);
         }
 
-        eb.setThumbnail("https://media.discordapp.net/attachments/564454752705052683/571084650202791938/wolf_logo_sm.png");
+        //eb.setThumbnail("https://media.discordapp.net/attachments/564454752705052683/571084650202791938/wolf_logo_sm.png");
 
         return eb.build();
     }
@@ -226,8 +278,8 @@ public class WBuilderUtils
      * @param image
      * @return
      */
-    private static MessageEmbed createMessageStatus(final String title, final Color color,
-                                             final HashMap<String, String> fieldsValue, final String image)
+    public static MessageEmbed createMessageStatus(final String title, final Color color,
+                                                   final HashMap<String, String> fieldsValue, final String image)
     {
         EmbedBuilder eb = new EmbedBuilder();
         eb.setTitle(title, null);
@@ -260,4 +312,18 @@ public class WBuilderUtils
 
         return eb.build();
     }
+
+    private MessageEmbed generate(double tps)
+    {
+        EmbedBuilder eb = new EmbedBuilder();
+        double lagPercentage = Math.round((1.0D - tps / 20.0D) * 100.0D);
+        eb.addField("TPS:", "`" + new DecimalFormat("#.####").format(tps) + "`", true);
+        eb.addField("Lag Percentage: ", lagPercentage + "%", true);
+        eb.addField("Free RAM: ", Runtime.getRuntime().freeMemory() / 1024L / 1024L + "mb", true);
+        eb.addField("Total Memory: ", Runtime.getRuntime().totalMemory() / 1024L / 1024L + "mb", true);
+        eb.addField("Allocated Memory: ", Runtime.getRuntime().totalMemory() / 1024L / 1024L + "mb", true);
+        eb.addBlankField(true);
+        return eb.build();
+    }
+
 }

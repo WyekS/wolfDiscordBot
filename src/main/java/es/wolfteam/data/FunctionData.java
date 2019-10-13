@@ -2,8 +2,8 @@ package es.wolfteam.data;
 
 import es.wolfteam.data.types.ActionType;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The type Function data.
@@ -12,13 +12,13 @@ public class FunctionData
 {
     private ActionType action;
     private String base;
-    private Set<String> params;
+    private List<String> params;
 
     public FunctionData()
     {
     }
 
-    public FunctionData(final String base, final Set<String> params)
+    public FunctionData(final String base, final List<String> params)
     {
         this.base = base;
         this.params = params;
@@ -42,7 +42,7 @@ public class FunctionData
     public FunctionData(final String base)
     {
         this.base = base;
-        params = new HashSet<>();
+        params = new ArrayList<>();
     }
 
     /**
@@ -56,7 +56,7 @@ public class FunctionData
     }
 
     /**
-     * Sets base.
+     * Lists base.
      *
      * @param base the base
      */
@@ -70,7 +70,7 @@ public class FunctionData
      *
      * @return params list
      */
-    public Set<String> getParams()
+    public List<String> getParams()
     {
         return this.params;
     }

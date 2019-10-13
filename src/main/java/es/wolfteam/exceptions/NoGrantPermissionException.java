@@ -3,14 +3,14 @@ package es.wolfteam.exceptions;
 /**
  * The type Filter exception.
  */
-public class FilterException extends Exception
+public class NoGrantPermissionException extends ActionFailedException
 {
     /**
      * Instantiates a new Filter exception.
      *
      * @param message the message to show
      */
-    public FilterException(String message)
+    public NoGrantPermissionException(String message)
     {
         super(message);
     }
@@ -21,7 +21,8 @@ public class FilterException extends Exception
      * @param message the message
      * @param cause   the cause
      */
-    public FilterException(String message, Throwable cause) {
+    public NoGrantPermissionException(String message, Throwable cause)
+    {
         super(message, cause);
     }
 }

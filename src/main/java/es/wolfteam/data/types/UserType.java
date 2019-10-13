@@ -11,12 +11,14 @@ public enum UserType
     private String name;
     private String port;
 
-    UserType(final String name, final String port) {
+    UserType(final String name, final String port)
+    {
         this.name = name;
         this.port = port;
     }
 
-    public String getName() {
+    public String getName()
+    {
         return name;
     }
 
