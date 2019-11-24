@@ -1,6 +1,7 @@
 package es.wolfteam.data.types;
 
 import es.wolfteam.services.actions.ActionService;
+import es.wolfteam.services.actions.events.OperationEventActionService;
 import es.wolfteam.services.actions.impl.DefaultActionService;
 import es.wolfteam.services.actions.impl.HelpActionService;
 import es.wolfteam.services.actions.impl.SlotActionService;
@@ -24,7 +25,8 @@ public enum ActionType
     STATUS("status", 1, DefaultActionService.class, PermissionType.WOLFTEAM),
     UPDATE("update", 2, UpdateActionService.class, PermissionType.OFFICER),
     NUCLEAR("nuclear", 1, DefaultActionService.class, PermissionType.ADMIN),
-    SLOT("slot", 3, SlotActionService.class, PermissionType.OFFICER);
+    SLOT("slot", 3, SlotActionService.class, PermissionType.OFFICER),
+    OPERATION("operation", 1, OperationEventActionService.class, PermissionType.OFFICER);
 
     private String name;
     private int maxParams;
