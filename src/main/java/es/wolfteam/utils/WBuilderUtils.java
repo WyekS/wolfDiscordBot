@@ -199,7 +199,7 @@ public class WBuilderUtils
         return createMessage("Update Arma 3", "La actualización está en proceso... [Bot playing]", Color.orange, null, null, false);
     }
 
-    public static MessageEmbed buildUpdateNoLogMessage()
+    public static MessageEmbed buildUpdateErrorMessage()
     {
         return createMessage("Error", "No ningún LOG sobre la actualización", null, null, null, false);
     }
@@ -207,6 +207,12 @@ public class WBuilderUtils
     public static MessageEmbed buildUpdateFinishMessage()
     {
         return createMessage("Update Arma 3", "La actualización ha finalizado", Color.green, null, null, false);
+    }
+
+    public static MessageEmbed buildOperationEventMessage()
+    {
+        return createMessage("Operación", "Se solitita intervención de las fuerzas de @Wolfteam a las 22.00h",
+                Color.green, null, null, false);
     }
 
     /**
@@ -228,14 +234,7 @@ public class WBuilderUtils
 
         eb.setTitle(title, null);
 
-        if (null == color)
-        {
-            eb.setColor(Color.red);
-        }
-        else
-        {
-            eb.setColor(color);
-        }
+        eb.setColor(null == color ? Color.red : color);
 
         if (null != description)
         {
@@ -250,7 +249,7 @@ public class WBuilderUtils
             }
         }
 
-        // eb.addBlankField(false); // Separation before image
+        eb.addBlankField(true); // Separation before image
         if (enableFooter)
         {
             eb.addBlankField(true); // Does the card more width

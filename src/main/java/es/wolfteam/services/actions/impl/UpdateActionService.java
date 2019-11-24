@@ -6,14 +6,17 @@ import es.wolfteam.exceptions.ActionFilterException;
 import es.wolfteam.filters.impl.UpdateFilterMessage;
 import es.wolfteam.services.actions.ActionService;
 import es.wolfteam.utils.WBuilderUtils;
+import es.wolfteam.utils.WSystemUtils;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.utils.AttachmentOption;
 import net.dv8tion.jda.internal.utils.JDALogger;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
 import java.io.File;
+import java.util.Date;
 
 /**
  * The type Start action service.
@@ -48,18 +51,33 @@ public class UpdateActionService implements ActionService
             try
             {
                 Thread.sleep(5000);
-                // todo llamar update -> mode = containerData.getFunctionData().getParams().get(1);
-                event.getTextChannel().sendMessage(WBuilderUtils.buildUpdateFinishMessage()).queue();
-                try
+
+
+                final String mode = convertToScriptParam(containerData);
+                if (mode == null)
                 {
-                    event.getChannel().sendFile(
-                            new File("/home/wyeks/Proyectos/arma/wolfDiscordBot/src/main/resources/messages/ink"), "LogUpdate.txt", AttachmentOption.SPOILER)
-                            .queue();
+                    return;
                 }
-                catch (final NullPointerException npe)
+
+                boolean res = WSystemUtils.executeCommand("/opt/update_arma/execute.sh", mode);
+                // Send result message
+                if (res)
                 {
-                    LOG.error("Error to read file log from update process");
-                    event.getChannel().sendMessage("No se ha generado ningún LOG sobre la actualización").queue();
+                    event.getTextChannel().sendMessage(WBuilderUtils.buildUpdateFinishMessage()).queue();
+                    try
+                    {
+                        event.getChannel().sendFile(
+                                new File("/opt/update_arma/log_update.txt"),
+                                "update_arma" + new Date() + ".log", AttachmentOption.SPOILER).queue();
+                    }
+                    catch (final IllegalArgumentException iae)
+                    {
+                        event.getTextChannel().sendMessage(WBuilderUtils.buildUpdateErrorMessage()).queue();
+                    }
+                }
+                else
+                {
+                    event.getTextChannel().sendMessage(WBuilderUtils.buildUpdateErrorMessage()).queue();
                 }
             }
             catch (InterruptedException e)
@@ -69,5 +87,29 @@ public class UpdateActionService implements ActionService
         }
         event.getJDA().getPresence().setActivity(Activity.playing(""));
 
+    }
+
+    @Nullable
+    private String convertToScriptParam(ContainerData containerData)
+    {
+        String mode = containerData.getFunctionData().getParams().get(1);
+        // TODO: refactorizar esto
+        if (mode.startsWith("all"))
+        {
+            mode = "1";
+        }
+        else if (mode.startsWith("servers"))
+        {
+            mode = "2";
+        }
+        else if (mode.startsWith("mods"))
+        {
+            mode = "3";
+        }
+        else
+        {
+            return null;
+        }
+        return mode;
     }
 }

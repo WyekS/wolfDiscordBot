@@ -17,7 +17,11 @@ __TODO__:
 de los canales/usuarios. Es decir, podrá ser usado por cualquier usuario pero habrá niveles de permisos que permitan realizar 
 funciones u otras.
 - **[DONE]** Gestión de permisos para las acciones/usuarios
+- **[IN_PROGRESS]** Acabar Actions Start, Stop and Update
 - Cargar PBO's desde Discord
+- Subir preset de MODS para el servidor o definir algunos...?
+- Meta bot -> cambiar properties, reiniciar bot...
+- Correción para menciones
 - etc
 
 > NOTA: Todas estas tareas no son definitivas, quedan abierta a opiniones :D

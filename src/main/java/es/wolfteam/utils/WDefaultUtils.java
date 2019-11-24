@@ -22,16 +22,7 @@ public class WDefaultUtils
      */
     public static Set<ActionType> getDefaultCommands()
     {
-        final Set<ActionType> actions = new HashSet<>();
-        actions.add(ActionType.HELP);
-        actions.add(ActionType.START);
-        actions.add(ActionType.STOP);
-        actions.add(ActionType.RESTART);
-        actions.add(ActionType.STATUS);
-        actions.add(ActionType.UPDATE);
-        actions.add(ActionType.NUCLEAR);
-        actions.add(ActionType.SLOT);
-        return actions;
+        return new HashSet<>(Arrays.asList(ActionType.values()));
     }
 
     /**

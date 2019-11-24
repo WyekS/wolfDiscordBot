@@ -44,12 +44,13 @@ public class WMaster extends ListenerAdapter
             final Message messageEvent = event.getMessage();
             final ContainerData containerData = new ContainerData();
             containerData.setSourceMessage(messageEvent);
+            LOG.info(messageEvent.getContentRaw());
             containerData.setFunctionData((FunctionData) filter.filterMessages(messageEvent.getContentRaw()));
             executeProcess(event, containerData);
         }
         catch (final FilterException fe)
         {
-            LOG.debug("This message does not meet the filter requirements!!");
+            LOG.info("This message does not meet the filter requirements!!");
         }
     }
 

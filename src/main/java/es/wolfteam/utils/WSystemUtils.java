@@ -13,7 +13,7 @@ public class WSystemUtils
      * @param command {@link String} command to execute
      * @return <code>true<code/> if all commands were executed correctly
      */
-    private boolean allServerExecution(final String command)
+    public static boolean allServerExecution(final String command)
     {
         boolean result = true;
         for (UserType userType : UserType.values())
@@ -34,7 +34,7 @@ public class WSystemUtils
      * @param arguments to generate command(0) + arguments(1-X) ProcessBuilder
      * @return <code>true<code/> if all commands were executed correctly
      */
-    private boolean executeCommand(final String... arguments)
+    public static boolean executeCommand(final String... arguments)
     {
         Process process;
         try
@@ -57,7 +57,7 @@ public class WSystemUtils
      * @param process to calculate
      * @return <code>true</code> it's finalized or not <code>false</code>
      */
-    private boolean processErrorHandler(Process process)
+    public static boolean processErrorHandler(Process process)
     {
         try
         {
