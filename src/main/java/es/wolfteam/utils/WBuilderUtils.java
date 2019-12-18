@@ -206,7 +206,28 @@ public class WBuilderUtils
 
     public static MessageEmbed buildUpdateFinishMessage()
     {
-        return createMessage("Update Arma 3", "La actualización ha finalizado", Color.green, null, null, false);
+        return createMessage("Update Arma 3", "La actualización ha finalizado", Color.green, null, null, true);
+    }
+
+
+    public static MessageEmbed buildStartSucessMessage(final String alias)
+    {
+        return createMessage("Mapa " + alias, "Se está iniciado el mapa " + alias + ", tardará unos minutos", Color.green, null, null, true);
+    }
+
+    public static MessageEmbed buildStartErrorMessage(final String alias)
+    {
+        return createMessage("Mapa " + alias, "Hay ocurrido un error al iniciar " + alias, Color.red, null, null, true);
+    }
+
+    public static MessageEmbed buildStopSucessMessage(final String alias)
+    {
+        return createMessage("Mapa " + alias, "Parado con éxito", Color.green, null, null, false);
+    }
+
+    public static MessageEmbed buildStopErrorMessage(final String alias)
+    {
+        return createMessage("Mapa " + alias, "Hay ocurrido un error al parar " + alias, Color.red, null, null, false);
     }
 
     public static MessageEmbed buildOperationEventMessage()

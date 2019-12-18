@@ -5,11 +5,11 @@ import es.wolfteam.filters.FilterMessage;
 
 import java.util.regex.Pattern;
 
-public class UpdateFilterMessage implements FilterMessage
+public class StartFilterMessage implements FilterMessage
 {
-    private static final String REGEX_MODE = "(all|servers|mods)?";
+    private static final String REGEX_ALIAS = "(alpha|nono|tango)";
 
-    public UpdateFilterMessage()
+    public StartFilterMessage()
     {
         // empty
     }
@@ -17,10 +17,10 @@ public class UpdateFilterMessage implements FilterMessage
     @Override
     public Boolean filterMessages(final String... messages) throws ActionFilterException
     {
-        Pattern pattern = Pattern.compile(REGEX_MODE);
+        Pattern pattern = Pattern.compile(REGEX_ALIAS);
         if (!pattern.matcher(messages[0]).matches())
         {
-            throw new ActionFilterException("Malformed parameter to Update action: " + messages[0]);
+            throw new ActionFilterException("Malformed parameter to Slot action: " + messages[0]);
         }
 
         return true;

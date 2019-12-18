@@ -10,6 +10,11 @@ public class SlotFilterMessage implements FilterMessage
     private static final String REGEX_PLACES = "([0-9])?";
     private static final String REGEX_SPEC = "(ametrallador|ataa|dmr|falcon|francotirador|granadero|ingeniero|medico|martillo|radio|triton|valquiria)?";
 
+    public SlotFilterMessage()
+    {
+        // empty
+    }
+
     @Override
     public Boolean filterMessages(final String... messages) throws ActionFilterException
     {

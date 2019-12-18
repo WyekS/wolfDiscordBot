@@ -12,7 +12,6 @@ import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.utils.AttachmentOption;
 import net.dv8tion.jda.internal.utils.JDALogger;
-import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
 import java.io.File;
@@ -31,7 +30,6 @@ public class UpdateActionService implements ActionService
     {
         final String mode = containerData.getFunctionData().getParams().get(1);
         filterMessage.filterMessages(mode);
-        event.getTextChannel().sendMessage(WBuilderUtils.buildUpdateInProcessMessage()).queue();
         // Send message on specific channel
         return event.getTextChannel();
     }
@@ -46,70 +44,83 @@ public class UpdateActionService implements ActionService
     public void runAction(final MessageReceivedEvent event, final ContainerData containerData)
     {
         event.getJDA().getPresence().setActivity(Activity.playing("Updating Arma 3"));
+        event.getTextChannel().sendMessage(WBuilderUtils.buildUpdateInProcessMessage()).queue();
+
         if (Bot.botMocked)
         {
-            try
-            {
-                Thread.sleep(5000);
-
-
-                final String mode = convertToScriptParam(containerData);
-                if (mode == null)
-                {
-                    return;
-                }
-
-                boolean res = WSystemUtils.executeCommand("/opt/update_arma/execute.sh", mode);
-                // Send result message
-                if (res)
-                {
-                    event.getTextChannel().sendMessage(WBuilderUtils.buildUpdateFinishMessage()).queue();
-                    try
-                    {
-                        event.getChannel().sendFile(
-                                new File("/opt/update_arma/log_update.txt"),
-                                "update_arma" + new Date() + ".log", AttachmentOption.SPOILER).queue();
-                    }
-                    catch (final IllegalArgumentException iae)
-                    {
-                        event.getTextChannel().sendMessage(WBuilderUtils.buildUpdateErrorMessage()).queue();
-                    }
-                }
-                else
-                {
-                    event.getTextChannel().sendMessage(WBuilderUtils.buildUpdateErrorMessage()).queue();
-                }
-            }
-            catch (InterruptedException e)
-            {
-                LOG.error("Serious execution error");
-            }
-        }
-        event.getJDA().getPresence().setActivity(Activity.playing(""));
-
-    }
-
-    @Nullable
-    private String convertToScriptParam(ContainerData containerData)
-    {
-        String mode = containerData.getFunctionData().getParams().get(1);
-        // TODO: refactorizar esto
-        if (mode.startsWith("all"))
-        {
-            mode = "1";
-        }
-        else if (mode.startsWith("servers"))
-        {
-            mode = "2";
-        }
-        else if (mode.startsWith("mods"))
-        {
-            mode = "3";
+            updateMocked(event);
         }
         else
         {
-            return null;
+            update(event, containerData);
         }
-        return mode;
+
+        try
+        {
+            Thread.sleep(10000);
+            event.getJDA().getPresence().setActivity(Activity.playing(""));
+        }
+        catch (InterruptedException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    private void update(MessageReceivedEvent event, ContainerData containerData)
+    {
+        final int mode = convertToScriptParam(containerData);
+        if (mode == 0)
+        {
+            return;
+        }
+        boolean res = WSystemUtils.executeCommand("/opt/update_arma/execute.sh", String.valueOf(mode));
+        // Send result message
+        if (res)
+        {
+            event.getTextChannel().sendMessage(WBuilderUtils.buildUpdateFinishMessage()).queue();
+            event.getChannel().sendFile(
+                    new File("/opt/update_arma/update.log"),
+                    "update_" + mode + "_" + new Date() + ".log", AttachmentOption.SPOILER).queue();
+        }
+        else
+        {
+            event.getTextChannel().sendMessage(WBuilderUtils.buildUpdateErrorMessage()).queue();
+        }
+    }
+
+    private void updateMocked(MessageReceivedEvent event)
+    {
+        try
+        {
+            // Emulate an update process from core/mods Arma
+            Thread.sleep(5000);
+            event.getTextChannel().sendMessage(WBuilderUtils.buildUpdateFinishMessage()).queue();
+            event.getChannel().sendFile(
+                    new File("/home/wyeks/Proyectos/arma/wolfDiscordBot/src/main/resources/messages/ink"), "LogUpdate.txt", AttachmentOption.SPOILER)
+                    .queue();
+
+        }
+        catch (final InterruptedException | NullPointerException ex)
+        {
+            LOG.error("Serious execution error");
+            event.getTextChannel().sendMessage(WBuilderUtils.buildUpdateErrorMessage()).queue();
+        }
+    }
+
+    private int convertToScriptParam(ContainerData containerData)
+    {
+        String mode = containerData.getFunctionData().getParams().get(1);
+        // TODO: refactorizar esto
+        switch (mode)
+        {
+            case "all":
+                return 1;
+            case "servers":
+                return 2;
+            case "mods":
+                return 3;
+            default:
+                return 0;
+        }
     }
 }

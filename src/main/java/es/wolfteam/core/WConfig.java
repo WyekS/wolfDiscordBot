@@ -15,7 +15,7 @@ public class WConfig
 
     public static void loadProperties()
     {
-        try (final InputStream input = new FileInputStream("/home/wyeks/Proyectos/arma/wolfDiscordBot/src/main/config/config.properties"))
+        try (final InputStream input = new FileInputStream("/opt/wolf_server/config/config.properties"))
         {
             properties = new Properties();
             properties.load(input);

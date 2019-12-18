@@ -50,7 +50,7 @@ public class WMaster extends ListenerAdapter
         }
         catch (final FilterException fe)
         {
-            LOG.info("This message does not meet the filter requirements!!");
+            LOG.info("This message does not meet the filter requirements!!. Cause: " + fe.getMessage());
         }
     }
 

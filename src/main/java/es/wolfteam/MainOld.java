@@ -26,24 +26,22 @@ import static es.wolfteam.Constants.Ids.CHANNEL_CALL_EVENTS;
 import static es.wolfteam.Constants.REGEX;
 import static es.wolfteam.Constants.Request.*;
 
-*/
-/**
+*
  * The type Bot.
  *
  * @author <a href="mailto:wyeks@live.com">wyeks</a> Discord Bot Utils for Wolf Team channel administration
- *//*
+
 
 public class MainOld extends ListenerAdapter
 {
     private static final Logger LOG = LoggerFactory.getLogger(MainOld.class);
 
-    */
-/**
+*
      * The entry point of application.
      *
      * @param args the input arguments
      * @throws LoginException the login exception
-     *//*
+
 
     public static void main(String[] args) throws LoginException
     {
@@ -145,8 +143,7 @@ public class MainOld extends ListenerAdapter
                         message = alias + " reiniciándose...\n" + "Ha sido reiniciado por " + event.getAuthor().getName();
                     break;
 
-               */
-/* case Constants.Commands.NUCLEAR:
+ case Constants.Commands.NUCLEAR:
                     LOG.info("RESTART ALL Executed");
                     result = allServerExecution(Constants.Alias.ROOT.concat(Constants.Alias.STOP))
                             && allServerExecution(Constants.Alias.ROOT.concat(Constants.Alias.START));
@@ -154,7 +151,7 @@ public class MainOld extends ListenerAdapter
                     if (result)
                         message = "El usuario " + event.getAuthor().getName() + " ha lanzado una bomba nuclear en Altis " +
                                 ":bomb:+ \nSe ha producido un parado e inicio de todos los servidores de Wolf Team";
-                    break;*//*
+                    break;
 
 
                 case Constants.Commands.STATUS:
@@ -249,13 +246,12 @@ public class MainOld extends ListenerAdapter
         }
     }
 
-    */
-/**
+*
      * Generate a message in the Channel param
      * <p/>
      *
      * @param messageChannel {@link MessageChannel}
-     *//*
+
 
     private void requestStatusServerArma(final MessageChannel messageChannel)
     {

@@ -4,9 +4,11 @@ plugins {
 }
 mainClassName = 'es.wolfteam.Bot'
 group 'es.wolfteam'
-version '1.20190818-RELEASE'
+version '1.20191218-RELEASE'
 
 def jdaVersion = '4.0.0_39'
+
+sourceCompatibility = targetCompatibility = 1.8
 
 repositories {
     mavenCentral()
