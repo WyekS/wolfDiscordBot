@@ -196,7 +196,7 @@ public class WBuilderUtils
 
     public static MessageEmbed buildUpdateInProcessMessage()
     {
-        return createMessage("Update Arma 3", "La actualización está en proceso... [Bot playing]", Color.orange, null, null, false);
+        return createMessage("Update Arma 3", "La actualización está en proceso...", Color.orange, null, null, false);
     }
 
     public static MessageEmbed buildUpdateErrorMessage()
@@ -206,28 +206,28 @@ public class WBuilderUtils
 
     public static MessageEmbed buildUpdateFinishMessage()
     {
-        return createMessage("Update Arma 3", "La actualización ha finalizado", Color.green, null, null, true);
+        return createMessage("Update Arma 3", "La actualización ha finalizado", Color.green, null, null, false);
     }
 
 
     public static MessageEmbed buildStartSucessMessage(final String alias)
     {
-        return createMessage("Mapa " + alias, "Se está iniciado el mapa " + alias + ", tardará unos minutos", Color.green, null, null, true);
+        return createMessage("Mapa " + alias, "Se está iniciado el mapa " + alias + ", tardará unos minutos", Color.green, null, null, false);
     }
 
     public static MessageEmbed buildStartErrorMessage(final String alias)
     {
-        return createMessage("Mapa " + alias, "Hay ocurrido un error al iniciar " + alias, Color.red, null, null, true);
+        return createMessage("Mapa " + alias, "Hay ocurrido un error al iniciar " + alias, Color.red, null, null, false);
     }
 
-    public static MessageEmbed buildStopSucessMessage(final String alias)
+    public static MessageEmbed buildStopSucessMessage()
     {
-        return createMessage("Mapa " + alias, "Parado con éxito", Color.green, null, null, false);
+        return createMessage("Stop Arma 3", "Servidores parados con éxito", Color.green, null, null, false);
     }
 
-    public static MessageEmbed buildStopErrorMessage(final String alias)
+    public static MessageEmbed buildStopErrorMessage()
     {
-        return createMessage("Mapa " + alias, "Hay ocurrido un error al parar " + alias, Color.red, null, null, false);
+        return createMessage("Stop Arma 3" , "Hay ocurrido un error al parar los servidores ", Color.red, null, null, false);
     }
 
     public static MessageEmbed buildOperationEventMessage()
@@ -268,9 +268,9 @@ public class WBuilderUtils
             {
                 eb.addField(entry.getKey(), entry.getValue(), true);
             }
+            eb.addBlankField(true); // Separation before image
         }
 
-        eb.addBlankField(true); // Separation before image
         if (enableFooter)
         {
             eb.addBlankField(true); // Does the card more width

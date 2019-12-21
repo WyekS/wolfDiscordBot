@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 
 public class StartFilterMessage implements FilterMessage
 {
-    private static final String REGEX_ALIAS = "(alpha|nono|tango)";
+    private static final String REGEX_ALIAS = "(delta|nono|tango)";
 
     public StartFilterMessage()
     {

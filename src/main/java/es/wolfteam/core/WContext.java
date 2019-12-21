@@ -52,6 +52,7 @@ public class WContext
         try
         {
             currentAction = getActionService(action);
+            LOG.info("Action to execute " + action.getName());
             final TextChannel resultChannel = currentAction.buildTargetMessage(event, container);
             currentAction.runAction(event, container);
             return resultChannel;

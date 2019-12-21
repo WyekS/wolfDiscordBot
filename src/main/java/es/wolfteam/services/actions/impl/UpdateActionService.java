@@ -80,7 +80,7 @@ public class UpdateActionService implements ActionService
             event.getTextChannel().sendMessage(WBuilderUtils.buildUpdateFinishMessage()).queue();
             event.getChannel().sendFile(
                     new File("/opt/update_arma/update.log"),
-                    "update_" + mode + "_" + new Date() + ".log", AttachmentOption.SPOILER).queue();
+                    "update_" + mode + "_" + new Date() + ".log").queue();
         }
         else
         {
