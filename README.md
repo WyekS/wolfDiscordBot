@@ -34,4 +34,3 @@ funciones u otras.
     - Mensajes Recordatorios
     - Intentar que fuera de la tarjeta antes escriba el texto @wolfteam para que les salga a todos como notificaciones
     - @wolfteam no menciona
-     
