@@ -106,8 +106,7 @@ public class WContext
         if (Bot.botMocked)
         {
             permissionService = new MockedPermissionService();
-        }
-        else
+        } else
         {
             permissionService = new DefaultPermissionService();
         }

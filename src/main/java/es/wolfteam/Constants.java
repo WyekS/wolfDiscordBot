@@ -10,7 +10,7 @@ public interface Constants
     interface Files
     {
         String HELP_MESSAGE_FILE = "messages/help_message.md";
-        String MODS_MESSAGE_FILE = "/home/user/personal/wolfDiscordBot/src/main/resources/mods";
+        String MODS_MESSAGE_FILE = "/home/arma3hc/serverfiles/arma3server_%s.sh/";
     }
 
     interface Ids
@@ -35,6 +35,6 @@ public interface Constants
         String OUR_IP = "82.223.29.198";
         String REQUEST_STATUS = "https://units.arma3.com/resource/server?ip_address=%1$s&port=%2$s";
         String TOKEN = "NTU5MDI3MzYyMjkzODc0Njg5.D3feiw.Ef1yFusAJoCBay9UhTFZ-TAPhW4";
-        String FRONT_END_HTTPS= "Front-End-Https";
+        String FRONT_END_HTTPS = "Front-End-Https";
     }
 }

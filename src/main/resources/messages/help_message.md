@@ -5,16 +5,17 @@ Puedes usar los siguientes comandos (para los alias no usar los <>):
 /* Muestra la ayuda del bot *
 
 2. /wolf start <alias>
-/* Primero para el servidor y luego inicia el servidor indicado *
+/* Inicia la instancia indicada. Este comando incluye STOP*
 
-3. /wolf stop <alias>
-/* Parar el servidor indicado con el alias *
+3. /wolf stop
+/* Para todas las instancias del servidor
 
-4. /wolf status [NO USAR]
-/* Muestra el estado de todos los servidores *
+4. /wolf mods <alias> list
+/* Lista los mods de la instancia indicada
 
 6. /wolf update all|servers|mods
 /* Elegir entre las opciones marcadas *
+> **Importante**: Es necesario reiniciar la instancia cuando termine el update
 
 7. /wolf slot X <especialización>
 /* Crea un evento con X nuevas vacantes de especialización *
@@ -22,9 +23,9 @@ Puedes usar los siguientes comandos (para los alias no usar los <>):
 ## Alias -- Mapa
 _______________________________________
 
-* < delta > <Misiones_oficiales> Entrenamiento
-* < tango > <Liberation> Otras misiones
-* < nono > <Operaciones> Misiones tipo Liberation
+* < delta > <Misiones_oficiales> Entrenamiento para WolfTeam
+* < tango > <Liberation Básica> Misiones públicas, con pocos o ningún mod
+* < nono > <Operaciones Regulares> Misiones tipo Liberation
 
 ## Especializaciones
 _______________________________________

@@ -6,22 +6,27 @@ import es.wolfteam.filters.FilterMessage;
 
 import java.util.regex.Pattern;
 
-public class ModsFilterMessage implements FilterMessage<Boolean> {
+public class ModsFilterMessage implements FilterMessage<Boolean>
+{
     private static final String REGEX_FUNC = "(list)?";
 
-    public ModsFilterMessage() {
+    public ModsFilterMessage()
+    {
         // empty
     }
 
     @Override
-    public Boolean filterMessages(final String... messages) throws ActionFilterException {
+    public Boolean filterMessages(final String... messages) throws ActionFilterException
+    {
         Pattern pattern = Pattern.compile(Constants.REGEX_ALIAS);
-        if (!pattern.matcher(messages[0]).matches()) {
+        if (!pattern.matcher(messages[0]).matches())
+        {
             throw new ActionFilterException("Malformed parameter to Mods ALIAS!: " + messages[0]);
         }
 
         pattern = Pattern.compile(REGEX_FUNC);
-        if (!pattern.matcher(messages[1]).matches()) {
+        if (!pattern.matcher(messages[1]).matches())
+        {
             throw new ActionFilterException("Malformed parameter to Mods FUNCTION!: " + messages[1]);
         }
 

@@ -14,35 +14,33 @@ import java.awt.*;
 /**
  * The type Slot action service.
  */
-public class ModsActionService implements ActionService {
-    private static final String CHANNEL_CALL_EVENTS = "channel.call_events";
-    private static final String CHANNEL_CALL_EVENTS_MOCKED = "channel.call_events_mocked";
-
+public class ModsActionService implements ActionService
+{
     private ModsFilterMessage filterMessage;
 
     @Override
-    public TextChannel buildTargetMessage(final MessageReceivedEvent event, final ContainerData containerData) throws ActionFilterException {
-        // Another way to mention a message
-        // event.getTextChannel().sendMessage("Prueba con mention" + event.getGuild().getRoleById("564470299370848280")
-        //         .getAsMention()).complete();
+    public TextChannel buildTargetMessage(final MessageReceivedEvent event, final ContainerData containerData) throws ActionFilterException
+    {
         final String alias = containerData.getFunctionData().getParams().get(1);
         final String function = containerData.getFunctionData().getParams().get(2);
         filterMessage.filterMessages(alias, function);
 
-        final String modsList = WBuilderUtils.buildModsMessage();
+        final String modsList = WBuilderUtils.buildModsMessage(alias);
         final MessageEmbed finalMessage =
-                WBuilderUtils.createMessage("Lista de Mods cargadas en el mapa nono", modsList, Color.BLUE, null, null, true);
+                WBuilderUtils.createMessage("MODS | **Mapa " + alias + "**", modsList, Color.BLUE, null, null, false);
         containerData.setResultMessage(finalMessage);
         return event.getTextChannel();
     }
 
     @Override
-    public void instanciateFilters() {
+    public void instanciateFilters()
+    {
         filterMessage = new ModsFilterMessage();
     }
 
     @Override
-    public void runAction(final MessageReceivedEvent event, final ContainerData containerData) {
+    public void runAction(final MessageReceivedEvent event, final ContainerData containerData)
+    {
         // empty action
     }
 }

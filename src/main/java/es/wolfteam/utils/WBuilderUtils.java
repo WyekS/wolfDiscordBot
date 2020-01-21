@@ -36,7 +36,8 @@ import static es.wolfteam.Constants.Files.HELP_MESSAGE_FILE;
 import static es.wolfteam.Constants.Files.MODS_MESSAGE_FILE;
 import static es.wolfteam.Constants.Request.FRONT_END_HTTPS;
 
-public class WBuilderUtils {
+public class WBuilderUtils
+{
     private static final Logger LOG = JDALogger.getLog(WBuilderUtils.class);
 
     /**
@@ -157,43 +158,58 @@ public class WBuilderUtils {
      *
      * @return {@link String} a help message to discord
      */
-    public static String buildHelpingsMessage() {
+    public static String buildHelpingsMessage()
+    {
         String result = "";
         ClassLoader classLoader = Bot.class.getClassLoader();
-        try {
+        try
+        {
             result = IOUtils.toString(
                     Objects.requireNonNull(classLoader.getResourceAsStream(HELP_MESSAGE_FILE)), StandardCharsets.UTF_8);
-        } catch (final IOException ioe) {
+        }
+        catch (final IOException ioe)
+        {
             LOG.error("Error I/O when the file help_message.md was being read");
         }
 
         return result;
     }
 
-    public static String buildModsMessage() {
-        final File file = new File(MODS_MESSAGE_FILE);
+    public static String buildModsMessage(final String alias)
+    {
+        final File file = new File(String.format(MODS_MESSAGE_FILE, alias));
         final StringBuilder result = new StringBuilder();
-        try {
+        try
+        {
             final List<String> contents = FileUtils.readLines(file, "UTF-8");
 
+            result.append("```");
             // Iterate the result to print each line of the file.
-            for (final String line : contents) {
-                if (line.startsWith("MODS+=\"@")) {
-                    result.append(line, 6, line.length() - 2);
+            for (final String line : contents)
+            {
+                if (line.startsWith("MODS+=\"@"))
+                {
+                    result.append(line, 8, line.length() - 2);
                     result.append("\n");
                 }
             }
-        } catch (IOException e) {
+            result.append("```");
+
+        }
+        catch (IOException e)
+        {
             LOG.error("Error I/O when the file MOD was being read");
         }
 
         return result.toString();
     }
 
-    public static String buildInk() {
+    public static String buildInk()
+    {
         String result = "";
         ClassLoader classLoader = Bot.class.getClassLoader();
-        try {
+        try
+        {
             result = IOUtils.toString(
                     Objects.requireNonNull(classLoader.getResourceAsStream("messages/ink")), StandardCharsets.UTF_8);
         }
@@ -248,7 +264,7 @@ public class WBuilderUtils {
 
     public static MessageEmbed buildStopErrorMessage()
     {
-        return createMessage("Stop Arma 3" , "Hay ocurrido un error al parar los servidores ", Color.red, null, null, false);
+        return createMessage("Stop Arma 3", "Hay ocurrido un error al parar los servidores ", Color.red, null, null, false);
     }
 
     public static MessageEmbed buildOperationEventMessage()
@@ -334,8 +350,7 @@ public class WBuilderUtils {
                 {
                     eb.addField(entry.getKey(), entry.getValue(), false);
                     eb.addBlankField(false);
-                }
-                else
+                } else
                 {
                     eb.addField(entry.getKey(), entry.getValue(), true);
                 }
