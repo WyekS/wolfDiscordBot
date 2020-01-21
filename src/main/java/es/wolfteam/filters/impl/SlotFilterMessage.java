@@ -5,13 +5,11 @@ import es.wolfteam.filters.FilterMessage;
 
 import java.util.regex.Pattern;
 
-public class SlotFilterMessage implements FilterMessage
-{
+public class SlotFilterMessage implements FilterMessage<Boolean> {
     private static final String REGEX_PLACES = "([0-9])?";
     private static final String REGEX_SPEC = "(ametrallador|ataa|dmr|falcon|francotirador|granadero|ingeniero|medico|martillo|radio|triton|valquiria)?";
 
-    public SlotFilterMessage()
-    {
+    public SlotFilterMessage() {
         // empty
     }
 

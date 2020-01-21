@@ -3,12 +3,14 @@ package es.wolfteam;
 public interface Constants
 {
     String BASE = "/wolf";
+    String REGEX_ALIAS = "(delta|nono|tango)";
     String REGEX = "(/wolf)\\s(help|start|stop|restart|nuclear|status|update|slot)(\\s(all|servers|mods|delta|tango|nono|[0-9]))?" +
             "(\\s(ametrallador|ataa|dmr|falcon|francotirador|granadero|ingeniero|medico|martillo|radio|triton|valquiria))?";
 
     interface Files
     {
         String HELP_MESSAGE_FILE = "messages/help_message.md";
+        String MODS_MESSAGE_FILE = "/home/user/personal/wolfDiscordBot/src/main/resources/mods";
     }
 
     interface Ids
