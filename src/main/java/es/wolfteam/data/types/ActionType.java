@@ -12,7 +12,8 @@ import es.wolfteam.services.actions.impl.*;
  * - {@link ActionService} Class target
  * - Minimum Level for Rol Permission to execute this command
  */
-public enum ActionType {
+public enum ActionType
+{
     HELP("help", 1, HelpActionService.class, PermissionType.WOLFTEAM),
     START("start", 2, StartActionService.class, PermissionType.OFFICER),
     STOP("stop", 1, StopActionService.class, PermissionType.OFFICER),
@@ -21,14 +22,16 @@ public enum ActionType {
     UPDATE("update", 2, UpdateActionService.class, PermissionType.OFFICER),
     NUCLEAR("nuclear", 1, DefaultActionService.class, PermissionType.ADMIN),
     SLOT("slot", 3, SlotActionService.class, PermissionType.OFFICER),
-    MODS("mods", 3, ModsActionService.class, PermissionType.OFFICER);
+    LISTMODS("mods", 3, ListModsActionService.class, PermissionType.OFFICER),
+    SETMODS("mods", 3, ListModsActionService.class, PermissionType.OFFICER);
 
     private String name;
     private int maxParams;
     private Class<?> actionService;
     private PermissionType requiredLevel;
 
-    ActionType(final String name, int maxParams, final Class<?> actionService, final PermissionType requiredLevel) {
+    ActionType(final String name, int maxParams, final Class<?> actionService, final PermissionType requiredLevel)
+    {
         this.name = name;
         this.maxParams = maxParams;
         this.actionService = actionService;

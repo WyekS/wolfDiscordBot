@@ -42,10 +42,12 @@ public class WMaster extends ListenerAdapter
         try
         {
             final Message messageEvent = event.getMessage();
+            LOG.info(messageEvent.getContentRaw());
             final ContainerData containerData = new ContainerData();
             containerData.setSourceMessage(messageEvent);
-            LOG.info(messageEvent.getContentRaw());
             containerData.setFunctionData((FunctionData) filter.filterMessages(messageEvent.getContentRaw()));
+            containerData.setAuthorId(event.getAuthor().getIdLong());
+            containerData.setChannelId(event.getChannel().getIdLong());
             executeProcess(event, containerData);
         }
         catch (final FilterException fe)

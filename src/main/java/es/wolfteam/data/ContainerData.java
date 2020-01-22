@@ -8,9 +8,31 @@ import net.dv8tion.jda.api.entities.MessageEmbed;
  */
 public class ContainerData
 {
+    private long authorId;
+    private long channelId;
     private Message sourceMessage;
     private MessageEmbed resultMessage;
     private FunctionData functionData;
+
+    public long getAuthorId()
+    {
+        return authorId;
+    }
+
+    public void setAuthorId(long authorId)
+    {
+        this.authorId = authorId;
+    }
+
+    public long getChannelId()
+    {
+        return channelId;
+    }
+
+    public void setChannelId(long channelId)
+    {
+        this.channelId = channelId;
+    }
 
     /**
      * Gets message event.
