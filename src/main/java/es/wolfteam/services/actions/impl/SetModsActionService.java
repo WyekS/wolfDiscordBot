@@ -4,10 +4,13 @@ import es.wolfteam.data.ContainerData;
 import es.wolfteam.exceptions.ActionFilterException;
 import es.wolfteam.filters.impl.ModsFilterMessage;
 import es.wolfteam.services.actions.ActionService;
+import es.wolfteam.utils.WBuilderUtils;
+import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.io.IOUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -15,7 +18,12 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import javax.annotation.Nonnull;
+import java.awt.*;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.concurrent.ExecutionException;
 
 /**
  * The type Slot action service.
@@ -60,14 +68,30 @@ public class SetModsActionService extends ListenerAdapter implements ActionServi
         }
         else if (event.getAuthor().getIdLong() == containerData.getAuthorId())
         {
-            if ()
+            final Set<Message.Attachment> files = new HashSet<>(event.getMessage().getAttachments());
+            if (CollectionUtils.isNotEmpty(files))
+            {
+                for (Message.Attachment file : files)
+                {
+
+                    try
+                    {
+                        final String result = parseHtml(file.retrieveInputStream().get());
+                        event.getChannel().sendMessage(WBuilderUtils.createMessage("Mods del html", result, Color.GREEN, null, null, true)).queue();
+                    }
+                    catch (InterruptedException | ExecutionException e)
+                    {
+                        e.printStackTrace();
+                    }
+                }
                 event.getJDA().removeEventListener(this); // stop listening
+
+            }
         }
         else
         {
             channel.sendMessage("Wait your turn " + event.getMember().getEffectiveName() + "!").queue();
         }
-
 
         super.onMessageReceived(event);
     }
@@ -84,12 +108,13 @@ public class SetModsActionService extends ListenerAdapter implements ActionServi
         // empty action
     }
 
-    private String parseHtml()
+    private String parseHtml(final InputStream inputStream)
     {
+        final StringBuilder build = new StringBuilder();
+
         try
         {
-            final StringBuilder build = new StringBuilder();
-            build.append(IOUtils.readLines(new FileInputStream("/home/irufian/Documents/toparse.html"), "UTF-8"));
+            build.append(IOUtils.readLines(inputStream, "UTF-8"));
 
             final Document html = Jsoup.parse(build.toString());
             final Elements modDivs = html.body().getElementsByTag("tr");
@@ -108,5 +133,6 @@ public class SetModsActionService extends ListenerAdapter implements ActionServi
         {
             e.printStackTrace();
         }
+        return build.toString();
     }
 }

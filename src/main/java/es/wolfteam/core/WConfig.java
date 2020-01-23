@@ -15,10 +15,13 @@ public class WConfig
 
     public static void loadProperties()
     {
-        try (final InputStream input = new FileInputStream("/home/user/personal/wolfDiscordBot/src/main/config/config.properties")) {
+        try (final InputStream input = new FileInputStream("/home/user/config.properties"))
+        {
             properties = new Properties();
             properties.load(input);
-        } catch (final IOException ex) {
+        }
+        catch (final IOException ex)
+        {
             LOG.error("Error when properties was loading");
         }
     }
