@@ -24,8 +24,8 @@ public class StopActionService implements ActionService
     @Override
     public TextChannel buildTargetMessage(final MessageReceivedEvent event, final ContainerData containerData) throws ActionFilterException
     {
-        // implementation is not necessary
-        filterMessage.filterMessages("");
+        final String alias = containerData.getFunctionData().getParams().get(1);
+        filterMessage.filterMessages(alias);
         return event.getTextChannel();
     }
 
@@ -38,13 +38,22 @@ public class StopActionService implements ActionService
     @Override
     public void runAction(final MessageReceivedEvent event, final ContainerData containerData)
     {
-
+        final String alias = containerData.getFunctionData().getParams().get(1);
         final String defaultUser = WConfig.getParameter("user.default");
-        LOG.info("stopserver");
         final String stopServer = WConfig.getParameter("path.stop_server");
 
         LOG.info("Executing command...");
-        final boolean result = WSystemUtils.executeCommand(stopServer, defaultUser);
+        boolean result;
+        if ("all".equals(alias))
+        {
+            result = WSystemUtils.executeCommand(stopServer, defaultUser, "delta")
+                    && WSystemUtils.executeCommand(stopServer, defaultUser, "tango")
+                    && WSystemUtils.executeCommand(stopServer, defaultUser, "nono");
+        }
+        else
+        {
+            result = WSystemUtils.executeCommand(stopServer, defaultUser, alias);
+        }
         LOG.info("Result " + result);
 
         if (result)

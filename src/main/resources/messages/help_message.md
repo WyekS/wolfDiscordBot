@@ -5,10 +5,10 @@ Puedes usar los siguientes comandos (para los alias no usar los <>):
 /* Muestra la ayuda del bot *
 
 2. /wolf start <alias>
-/* Inicia la instancia indicada. Este comando incluye STOP*
+/* Inicia la instancia indicada, si ya está iniciada primero la para
 
-3. /wolf stop
-/* Para todas las instancias del servidor
+3. /wolf stop <usar alias o all>
+/* Para la instancia indicada o si usas ALL, para todas
 
 4. /wolf mods <alias> list
 /* Lista los mods de la instancia indicada
@@ -17,7 +17,7 @@ Puedes usar los siguientes comandos (para los alias no usar los <>):
 /* Elegir entre las opciones marcadas *
 > **Importante**: Es necesario reiniciar la instancia cuando termine el update
 
-7. /wolf slot X <especialización>
+7. [COMANDO NO IMPLEMENTADO] /wolf slot X <especialización>
 /* Crea un evento con X nuevas vacantes de especialización *
 
 ## Alias -- Mapa

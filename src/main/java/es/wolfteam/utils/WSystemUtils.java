@@ -1,11 +1,16 @@
 package es.wolfteam.utils;
 
 import es.wolfteam.data.types.UserType;
+import net.dv8tion.jda.internal.utils.JDALogger;
+import org.slf4j.Logger;
 
 import java.io.InputStream;
+import java.util.Arrays;
 
 public class WSystemUtils
 {
+    private static final Logger LOG = JDALogger.getLog(WSystemUtils.class);
+
     /**
      * Execute a command in all user from UserEnum
      * <p/>
@@ -36,10 +41,10 @@ public class WSystemUtils
      */
     public static boolean executeCommand(final String... arguments)
     {
-        Process process;
+        final Process process;
         try
         {
-            // LOG.info("Command to execute and arguments: " + Arrays.toString(arguments));
+            LOG.info("Command to execute and arguments: " + Arrays.toString(arguments));
             process = new ProcessBuilder(arguments).start();
         }
         catch (final Exception ex) // catch generic Exception because we want to show error for any unusual situation

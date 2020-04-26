@@ -46,7 +46,7 @@ public class Bot
         final FilterMessage filter = new DefaultFilterMessage(WDefaultUtils.getDefaultCommands());
         final WContext context = new WContext();
 
-        // JDA Funcitons
+        // JDA Functions
         final JDABuilder builder = new JDABuilder(AccountType.BOT);
         builder.setToken(WConfig.getParameter(TOKEN));
         builder.addEventListeners(new WMaster(filter, context));

@@ -4,13 +4,14 @@ public interface Constants
 {
     String BASE = "/wolf";
     String REGEX_ALIAS = "(delta|nono|tango)";
+    String REGEX_ALIAS_ALL = "(delta|nono|tango|all)";
     String REGEX = "(/wolf)\\s(help|start|stop|restart|nuclear|status|update|slot)(\\s(all|servers|mods|delta|tango|nono|[0-9]))?" +
             "(\\s(ametrallador|ataa|dmr|falcon|francotirador|granadero|ingeniero|medico|martillo|radio|triton|valquiria))?";
 
     interface Files
     {
         String HELP_MESSAGE_FILE = "messages/help_message.md";
-        String MODS_MESSAGE_FILE = "/home/arma3hc/serverfiles/arma3server_%s.sh/";
+        String MODS_MESSAGE_FILE = "/home/arma3hc/serverfiles/arma3server_%s.sh";
     }
 
     interface Ids
@@ -34,7 +35,6 @@ public interface Constants
     {
         String OUR_IP = "82.223.29.198";
         String REQUEST_STATUS = "https://units.arma3.com/resource/server?ip_address=%1$s&port=%2$s";
-        String TOKEN = "NTU5MDI3MzYyMjkzODc0Njg5.D3feiw.Ef1yFusAJoCBay9UhTFZ-TAPhW4";
         String FRONT_END_HTTPS = "Front-End-Https";
     }
 }

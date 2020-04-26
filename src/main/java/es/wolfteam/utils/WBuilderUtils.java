@@ -183,14 +183,14 @@ public class WBuilderUtils
         {
             final List<String> contents = FileUtils.readLines(file, "UTF-8");
 
-            result.append("```");
+            result.append("```md");
             // Iterate the result to print each line of the file.
             for (final String line : contents)
             {
                 if (line.startsWith("MODS+=\"@"))
                 {
-                    result.append(line, 8, line.length() - 2);
                     result.append("\n");
+                    result.append(line, 8, line.length() - 2);
                 }
             }
             result.append("```");
@@ -259,7 +259,7 @@ public class WBuilderUtils
 
     public static MessageEmbed buildStopSucessMessage()
     {
-        return createMessage("Stop Arma 3", "Servidores parados con éxito", Color.green, null, null, false);
+        return createMessage("Stop Arma 3", "Servidor/es parado/s con éxito", Color.green, null, null, false);
     }
 
     public static MessageEmbed buildStopErrorMessage()

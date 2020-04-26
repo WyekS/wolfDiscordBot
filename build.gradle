@@ -4,7 +4,7 @@ plugins {
 }
 mainClassName = 'es.wolfteam.Bot'
 group 'es.wolfteam'
-version '1.20200122-RELEASE'
+version '1.20200426-RELEASE'
 
 def jdaVersion = '4.0.0_39'
 

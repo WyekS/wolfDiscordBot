@@ -49,7 +49,7 @@ public class StartActionService implements ActionService
         final String stopServer = WConfig.getParameter("path.stop_server");
 
         LOG.info("Executing command...");
-        final boolean result = WSystemUtils.executeCommand(stopServer, defaultUser)
+        final boolean result = WSystemUtils.executeCommand(stopServer, defaultUser, alias)
                 && WSystemUtils.executeCommand(startServer, defaultUser, alias);
         LOG.info("Result " + result);
 

@@ -16,7 +16,7 @@ public enum ActionType
 {
     HELP("help", 1, HelpActionService.class, PermissionType.WOLFTEAM),
     START("start", 2, StartActionService.class, PermissionType.OFFICER),
-    STOP("stop", 1, StopActionService.class, PermissionType.OFFICER),
+    STOP("stop", 2, StopActionService.class, PermissionType.OFFICER),
     RESTART("restart", 1, DefaultActionService.class, PermissionType.OFFICER),
     STATUS("status", 1, DefaultActionService.class, PermissionType.WOLFTEAM),
     UPDATE("update", 2, UpdateActionService.class, PermissionType.OFFICER),

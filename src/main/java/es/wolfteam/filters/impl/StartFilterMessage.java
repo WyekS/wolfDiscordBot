@@ -16,7 +16,7 @@ public class StartFilterMessage implements FilterMessage
     @Override
     public Boolean filterMessages(final String... messages) throws ActionFilterException
     {
-        Pattern pattern = Pattern.compile(Constants.REGEX_ALIAS);
+        final Pattern pattern = Pattern.compile(Constants.REGEX_ALIAS);
         if (!pattern.matcher(messages[0]).matches())
         {
             throw new ActionFilterException("Malformed parameter to Slot action: " + messages[0]);
