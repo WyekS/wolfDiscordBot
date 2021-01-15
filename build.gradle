@@ -1,0 +1,44 @@
+plugins {
+    id'application'
+    id'com.github.johnrengelman.shadow' version '4.0.4'
+}
+mainClassName = 'es.wolfteam.Bot'
+group 'es.wolfteam'
+version '1.20200426-RELEASE'
+
+def jdaVersion = '4.0.0_39'
+
+sourceCompatibility = targetCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+dependencies {
+    compile "net.dv8tion:JDA:$jdaVersion"
+    compile 'org.apache.commons:commons-lang3:3.7'
+    compile group: 'commons-io', name: 'commons-io', version: '2.5'
+    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.26'
+    compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.6.1'
+    compile group: 'com.mashape.unirest', name: 'unirest-java', version: '1.3.1'
+    compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.3.1'
+    compile group: 'org.apache.httpcomponents', name: 'httpasyncclient', version: '4.0'
+    compile group: 'org.apache.httpcomponents', name: 'httpmime', version: '4.3.1'
+    compile group: 'org.json', name: 'json', version: '20090211'
+}
+
+// Task "distZip" added by plugin "java-library-distribution":
+//distZip.shouldRunAfter(build)
+
+//jar {
+//    // Keep jar clean:
+//    exclude 'META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.RSA', 'META-INF/*.MF'
+//
+//    manifest {
+//        attributes 'Main-Class': 'es.wolfteam.Main',
+//        'Class-Path': configurations.runtime.files.collect { "lib/$it.name" }.join(' ')
+//    }
+//}
+
+compileJava.options.encoding = 'UTF-8'
